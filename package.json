@@ -6,8 +6,12 @@
   "author": "heteng99",
   "license": "ISC",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heteng99/linter"
+  },
   "bin": {
-    "init": "./scripts/init.js"
+    "lint-cli": "./bin/init.js"
   },
   "dependencies": {
     "eslint-config-prettier": "^9.1.0",
