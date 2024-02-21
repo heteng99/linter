@@ -104,14 +104,14 @@ export default [
 - [ESLint Rules](https://eslint.org/docs/latest/rules/)
 
 
-## TODO
+## ☑️TODO
 
 - [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) 
 - 支持内置 StyleLint
 - 支持命令生成 ESLint 和 Prettier 配置文件
 
-## 推荐阅读
+## 📖推荐阅读
 
 - [eslint为什么没有实现max-len的autofix？](https://juejin.cn/post/7108201700925636644)
 - [ESLint 之与 Prettier 配合使用](https://juejin.cn/post/6924568874700505102)
