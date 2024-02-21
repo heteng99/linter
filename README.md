@@ -37,9 +37,7 @@ export default myESLintConfig;
 然后可以在 `package.json` 中添加脚本
 
 ```json
-// package.json
 {
-  // ... other configs
   "scripts": {
     "lint": "npm run eslint .",
     "lint:fix": "npm run eslint . --fix"
