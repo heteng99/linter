@@ -11,7 +11,7 @@
     "url": "https://github.com/heteng99/linter"
   },
   "bin": {
-    "lint-cli": "./bin/init.js"
+    "lint-cli": "./bin/init.cjs"
   },
   "dependencies": {
     "eslint-config-prettier": "^9.1.0",
