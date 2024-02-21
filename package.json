@@ -6,11 +6,17 @@
   "author": "heteng99",
   "license": "ISC",
   "type": "module",
+  "bin": {
+    "init": "./scripts/init.js"
+  },
   "dependencies": {
-    "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "prettier": "^3.2.5",
     "typescript-eslint": "^7.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "@types/node": "^20.11.19"
   }
 }

@@ -109,6 +109,7 @@ export default [
 - [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) 
 - 支持内置 StyleLint
+- 支持命令生成 ESLint 和 Prettier 配置文件
 
 ## 推荐阅读
 
