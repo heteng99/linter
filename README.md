@@ -12,13 +12,14 @@
 
 
 ## 📦Install
+
+> ⚠ 使用时**需要**安装 ESLint@8.0.0+
+
 ```
-npm install @heteng99/linter -D
+npm install @heteng99/linter eslint -D
 ```
 
 ## ☕How to use it
-
-> ⚠ 使用时**无需**安装 eslint 和 prettier，以及其他任何 lint 工具，已内置~
 
 ### ESLint 配置
 
