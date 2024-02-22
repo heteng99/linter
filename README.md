@@ -109,8 +109,7 @@ export default [
 - 添加规则 [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
 - 添加规则 [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) 
 - 支持内置 StyleLint
-- 支持命令生成 ESLint 和 Prettier 配置文件
-- 改造成 lint-cli
+- 改造成 lint-cli，运行命令完成所有配置
 
 ## 📖推荐阅读
 
