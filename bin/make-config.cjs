@@ -9,7 +9,7 @@ const prompts = require('prompts');
 
 const eslintConfigTemplate = `import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import tseslint from 'typescript-eslint';
-import globals from 'globals';
+// import globals from 'globals';
 
 export default tseslint.config(
   eslintPluginPrettierRecommended,
@@ -21,7 +21,6 @@ export default tseslint.config(
       //   ...globals.node,
       //   ...globals.browser,
       // },
-
       // add your custom global various here
       // myCustomGlobalVar: 'readonly',
     },
