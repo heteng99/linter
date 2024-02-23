@@ -13,10 +13,10 @@
 
 ## 📦Install
 
-> ⚠ 使用时**需要**安装 ESLint@8.0.0+
+> ⚠ 使用时**需要**安装 ESLint@8.0.0+ 和 Prettier
 
 ```
-npm install @heteng99/linter eslint -D
+npm install @heteng99/linter -D
 ```
 
 ## ☕How to use it
