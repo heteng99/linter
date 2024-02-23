@@ -21,20 +21,17 @@ npm install @heteng99/linter eslint -D
 
 ## ☕How to use it
 
-### ESLint 配置
+### 生成配置文件
 
-在项目根目录下创建 `eslint.config.js` 文件
+使用 `lint-cli` 生成模板配置文件
 
-```js
-// eslint.config.js
-import myESLintConfig from '@heteng99/linter';
-
-export default myESLintConfig;
+```bash
+npm run lint-cli
 ```
 
-大功告成~
+执行命令后，执行目录下会生成两个配置文件 `eslint.config.js` 和 `prettier.config.js`
 
-然后可以在 `package.json` 中添加脚本
+可以在 `package.json` 中添加脚本，方便使用：
 
 ```json
 {
@@ -63,11 +60,11 @@ export default myESLintConfig;
 查看控制台的输出，如图表示 ESLint 正常运作，可以做其他事情啦~
 ![img](./readme_resources/20240220221337.png)
 
-### 覆盖规则 & 配置
+### 修改规则、配置
 
 #### Ⅰ. 覆盖 Prettier 规则
 
-在根目录下创建 `prettier.config.js` 文件，详情见 [Prettier 配置参考](https://prettier.io/docs/en/options.html)
+修改 `prettier.config.js` 文件，详情见 [Prettier 配置参考](https://prettier.io/docs/en/options.html)
 
 ```js
 /** @type {import("prettier").Config} */
@@ -78,7 +75,7 @@ export default {
 
 #### Ⅱ. 覆盖 ESLint 规则
 
-这就需要修改 `eslint.config.js` 了，例如我想要：
+修改 `eslint.config.js` 了，例如我想要：
 
 - 添加一条规则
 - 添加 ignore 规则
@@ -109,7 +106,7 @@ export default [
 - 添加规则 [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
 - 添加规则 [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) 
 - 支持内置 StyleLint
-- 改造成 lint-cli，运行命令完成所有配置
+- ✔️ 改造成 lint-cli，运行命令完成所有配置
 
 ## 📖推荐阅读
 
