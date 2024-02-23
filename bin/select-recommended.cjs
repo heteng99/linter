@@ -1,15 +1,26 @@
+/**
+ * select recommended configs
+ */
+
 const prompts = require('prompts');
 
+const selectedConfigs = [];
+
 const RECOMMENDED_CONFIG_OPTIONS = {
-  ESLINT_RECOMMENDED: 0,
-  TYPESCRIPT: 1,
-  VUE: 2,
-  VUE3: 3,
-  REACT: 4,
+  ESLINT_RECOMMENDED: [
+    `import eslint from '@eslint/js';`,
+    '  eslint.configs.recommended,',
+  ],
+  TYPESCRIPT: [null, '  ...tseslint.configs.recommended,'],
+
+  // TODO: to be supported
+  // VUE: [],
+  // VUE3: [],
+  // REACT: [],
 };
 
 const selectRecommendedConfig = async () => {
-  const { selectedConfigs } = await prompts([
+  const response = await prompts([
     {
       type: 'multiselect',
       name: 'selectedConfigs',
@@ -20,13 +31,19 @@ const selectRecommendedConfig = async () => {
           value: RECOMMENDED_CONFIG_OPTIONS.ESLINT_RECOMMENDED,
         },
         { title: 'TypeScript', value: RECOMMENDED_CONFIG_OPTIONS.TYPESCRIPT },
-        { title: 'Vue.js 2.x', value: RECOMMENDED_CONFIG_OPTIONS.VUE },
-        { title: 'Vue.js 3.x', value: RECOMMENDED_CONFIG_OPTIONS.VUE3 },
-        { title: 'React', value: RECOMMENDED_CONFIG_OPTIONS.REACT },
+
+        // TODO: to be supported
+        // { title: 'Vue.js 2.x', value: RECOMMENDED_CONFIG_OPTIONS.VUE },
+        // { title: 'Vue.js 3.x', value: RECOMMENDED_CONFIG_OPTIONS.VUE3 },
+        // { title: 'React', value: RECOMMENDED_CONFIG_OPTIONS.REACT },
       ],
     },
   ]);
-  return selectedConfigs;
+  selectedConfigs.push(...response.selectedConfigs);
 };
 
-module.exports = { selectRecommendedConfig, RECOMMENDED_CONFIG_OPTIONS };
+module.exports = {
+  selectRecommendedConfig,
+  RECOMMENDED_CONFIG_OPTIONS,
+  selectedConfigs,
+};

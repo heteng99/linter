@@ -1,3 +1,0 @@
-import myLinter from '@heteng99/linter';
-
-export default myLinter;
