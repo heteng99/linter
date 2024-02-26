@@ -2,10 +2,11 @@
  * make template of eslint.config.js & prettier.config.js
  */
 
-const fs = require('fs').promises;
-const fsSync = require('fs');
-const path = require('path');
-const prompts = require('prompts');
+import fsp from 'node:fs/promises';
+import fs from 'node:fs';
+import path from 'node:path';
+import prompts from 'prompts';
+import { RECOMMENDED_CONFIG_STATEMENT, RECOMMENDED_IMPORT_STATEMENT, SelectedKey } from './select-recommended';
 
 const eslintConfigTemplate = `import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import { defineFlatConfig } from '@antfu/eslint-define-config';
@@ -29,12 +30,12 @@ export default {
 };
 `;
 
-const makeESLintConfigFile = (selectedConfigs) => {
-  const importStatements = [];
-  const configStatements = [];
-  for (const [importStatement, configStatement] of selectedConfigs) {
-    importStatement && importStatements.push(importStatement);
-    configStatement && configStatements.push(configStatement);
+const makeESLintConfigFile = (selectedKeys: SelectedKey[]) => {
+  const importStatements: string[] = [];
+  const configStatements: string[] = [];
+  for (const key of selectedKeys) {
+    importStatements.push(RECOMMENDED_IMPORT_STATEMENT[key]);
+    configStatements.push(RECOMMENDED_CONFIG_STATEMENT[key]);
   }
   const templateArr = eslintConfigTemplate.split('\n');
   const importPosition = 0;
@@ -55,34 +56,29 @@ const askIfOverwriteConfigFile = async (fileName = 'the config file') => {
   return Boolean(doOverwrite);
 };
 
-const writeConfigFile = async (fileContent, fileName) => {
+const writeConfigFile = async (fileContent: string, fileName: string) => {
   const spinner = (await import('ora')).default();
   spinner.start(`Generating ${fileName}`);
   try {
-    if (fsSync.existsSync(path.resolve(process.cwd(), fileName))) {
+    if (fs.existsSync(path.resolve(process.cwd(), fileName))) {
       spinner.stop();
       const doOverwrite = await askIfOverwriteConfigFile(fileName);
       if (!doOverwrite) {
-        spinner.warn("Failed in writing config file: config file '${fileName}' exists.");
+        spinner.warn(`Failed in generating config file: config file '${fileName}' exists.`);
         return;
       }
     }
-    await fs.writeFile(path.resolve(process.cwd(), fileName), fileContent, { flag: 'w' });
+    await fsp.writeFile(path.resolve(process.cwd(), fileName), fileContent, { flag: 'w' });
     spinner.succeed(`File '${fileName}' is generated successfully.`);
   } catch {
-    spinner.warn(`Failed in writing file '${fileName}'.`);
+    spinner.warn(`Failed in generating config file '${fileName}'.`);
   }
 };
 
-const writeESLintConfigFile = async (selectedConfigs) => {
-  await writeConfigFile(makeESLintConfigFile(selectedConfigs), 'eslint.config.js');
+export const writeESLintConfigFile = async (selectedKeys: SelectedKey[]) => {
+  await writeConfigFile(makeESLintConfigFile(selectedKeys), 'eslint.config.js');
 };
 
-const writePrettierConfigFile = async () => {
+export const writePrettierConfigFile = async () => {
   await writeConfigFile(prettierConfigTemplate, 'prettier.config.js');
-};
-
-module.exports = {
-  writeESLintConfigFile,
-  writePrettierConfigFile,
 };
