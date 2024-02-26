@@ -7,8 +7,7 @@ const checkIfInstall = (pkgName) => {
 };
 
 const checkESLintSemver = () => {
-  const eslintVersion =
-    semver.coerce(pkgJsonObj?.devDependencies?.eslint) ?? '0.0.0';
+  const eslintVersion = semver.coerce(pkgJsonObj?.devDependencies?.eslint) ?? '0.0.0';
   return semver.gte(eslintVersion, '8.0.0');
 };
 
@@ -18,16 +17,12 @@ const checkESLint = async () => {
     spinner.start('Checking if eslint installed');
     if (checkIfInstall('eslint')) {
       if (!checkESLintSemver()) {
-        spinner.warn(
-          'Detected that eslint version is lower than 8.0.0, run `npm update eslint` to update.',
-        );
+        spinner.warn('Detected that eslint version is lower than 8.0.0, run `npm update eslint` to update.');
       } else {
         spinner.stop();
       }
     } else {
-      spinner.warn(
-        'Detected that eslint is not installed, run `npm install eslint` to install.',
-      );
+      spinner.warn('Detected that eslint is not installed, run `npm install eslint` to install.');
     }
   } catch (e) {
     console.log(e);
@@ -40,9 +35,7 @@ const checkPrettier = async () => {
   try {
     spinner.start('Checking if prettier installed');
     if (!checkIfInstall('prettier')) {
-      spinner.warn(
-        'Detected that prettier is not installed, run `npm install prettier` to install.',
-      );
+      spinner.warn('Detected that prettier is not installed, run `npm install prettier` to install.');
     } else {
       spinner.stop();
     }

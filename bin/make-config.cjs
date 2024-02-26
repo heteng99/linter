@@ -8,24 +8,17 @@ const path = require('path');
 const prompts = require('prompts');
 
 const eslintConfigTemplate = `import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import tseslint from 'typescript-eslint';
-// import globals from 'globals';
+import { defineFlatConfig } from '@antfu/eslint-define-config';
+import globals from 'globals';
 
-export default tseslint.config(
+export default [
   eslintPluginPrettierRecommended,
-  {
+  defineFlatConfig({
     languageOptions: {
-      // add global various here
-      // https://eslint.org/blog/2022/08/new-config-system-part-2/#goodbye-environments%2C-hello-globals
-      // globals: {
-      //   ...globals.node,
-      //   ...globals.browser,
-      // },
-      // add your custom global various here
-      // myCustomGlobalVar: 'readonly',
+      globals: globals.node,
     },
-  },
-);
+  }),
+];
 `;
 
 const prettierConfigTemplate = `/** @type {import("prettier").Config} */
@@ -44,12 +37,8 @@ const makeESLintConfigFile = (selectedConfigs) => {
     configStatement && configStatements.push(configStatement);
   }
   const templateArr = eslintConfigTemplate.split('\n');
-  const importPosition =
-    templateArr.indexOf(`import globals from 'globals';`) + 1;
-  const configPosition =
-    templateArr.indexOf(`export default tseslint.config(`) +
-    importStatements.length +
-    1;
+  const importPosition = 0;
+  const configPosition = templateArr.indexOf(`export default [`) + importStatements.length + 1;
   templateArr.splice(importPosition, 0, ...importStatements);
   templateArr.splice(configPosition, 0, ...configStatements);
   return templateArr.join('\n');
@@ -74,15 +63,11 @@ const writeConfigFile = async (fileContent, fileName) => {
       spinner.stop();
       const doOverwrite = await askIfOverwriteConfigFile(fileName);
       if (!doOverwrite) {
-        spinner.warn(
-          `Failed in writing config file: config file '${fileName}' exists.`,
-        );
+        spinner.warn("Failed in writing config file: config file '${fileName}' exists.");
         return;
       }
     }
-    await fs.writeFile(path.resolve(process.cwd(), fileName), fileContent, {
-      flag: 'w',
-    });
+    await fs.writeFile(path.resolve(process.cwd(), fileName), fileContent, { flag: 'w' });
     spinner.succeed(`File '${fileName}' is generated successfully.`);
   } catch {
     spinner.warn(`Failed in writing file '${fileName}'.`);
@@ -90,10 +75,7 @@ const writeConfigFile = async (fileContent, fileName) => {
 };
 
 const writeESLintConfigFile = async (selectedConfigs) => {
-  await writeConfigFile(
-    makeESLintConfigFile(selectedConfigs),
-    'eslint.config.js',
-  );
+  await writeConfigFile(makeESLintConfigFile(selectedConfigs), 'eslint.config.js');
 };
 
 const writePrettierConfigFile = async () => {

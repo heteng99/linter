@@ -16,7 +16,7 @@
 > ⚠ 使用时**需要**安装 ESLint@8.0.0+ 和 Prettier
 
 ```
-npm install @heteng99/linter -D
+npm install @heteng99/linter eslint prettier -D
 ```
 
 ## ☕How to use it
@@ -30,17 +30,6 @@ npm run lint-cli
 ```
 
 执行命令后，执行目录下会生成两个配置文件 `eslint.config.js` 和 `prettier.config.js`
-
-可以在 `package.json` 中添加脚本，方便使用：
-
-```json
-{
-  "scripts": {
-    "lint": "npm run eslint .",
-    "lint:fix": "npm run eslint . --fix"
-  }
-}
-```
 
 ### VSCode 相关修改
 
@@ -82,24 +71,24 @@ export default {
 
 ```js
 // eslint.config.js
-import myESLintConfig from '@heteng99/linter';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import { defineFlatConfig } from 'eslint-define-config';
 
-export default [
-  ...myESLintConfig,
+export default defineFlatConfig([
+  eslintPluginPrettierRecommended,
   {
     rules: {
-      // add eslint rules here
+      'max-len': 120,
     },
-    ignore: ['dist/**/*'],
+    ignore: ['dist/**/*.js'],
   },
-];
+]);
 ```
 
 可参考：
 
 - [ESLint Flat 配置](https://eslint.org/docs/latest/use/configure/configuration-files-new)
 - [ESLint Rules](https://eslint.org/docs/latest/rules/)
-
 
 ## ☑️TODO
 

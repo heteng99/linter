@@ -14,6 +14,7 @@
     "lint-cli": "./bin/lint-cli.cjs"
   },
   "dependencies": {
+    "@antfu/eslint-define-config": "1.23.0-2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "globals": "^14.0.0",

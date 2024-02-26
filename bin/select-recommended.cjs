@@ -7,11 +7,8 @@ const prompts = require('prompts');
 const selectedConfigs = [];
 
 const RECOMMENDED_CONFIG_OPTIONS = {
-  ESLINT_RECOMMENDED: [
-    `import eslint from '@eslint/js';`,
-    '  eslint.configs.recommended,',
-  ],
-  TYPESCRIPT: [null, '  ...tseslint.configs.recommended,'],
+  ESLINT_RECOMMENDED: [`import eslint from '@eslint/js';`, '  eslint.configs.recommended,'],
+  TYPESCRIPT: [`import tseslint from 'typescript-eslint';`, '  ...tseslint.configs.recommended,'],
 
   // TODO: to be supported
   // VUE: [],
