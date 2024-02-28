@@ -1,6 +1,6 @@
 {
   "name": "@heteng99/linter",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "my linter",
   "main": "eslint.config.js",
   "author": "heteng99",
@@ -31,16 +31,7 @@
     "typescript-eslint": "^7.0.2"
   },
   "peerDependenciesMeta": {
-    "eslint-config-prettier": {
-      "optional": true
-    },
-    "eslint-plugin-prettier": {
-      "optional": true
-    },
     "typescript-eslint": {
-      "optional": true
-    },
-    "globals": {
       "optional": true
     }
   },
