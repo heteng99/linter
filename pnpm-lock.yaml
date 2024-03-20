@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@antfu/eslint-define-config':
-    specifier: 1.23.0-2
-    version: 1.23.0-2
   ora:
     specifier: ^8.0.1
     version: 8.0.1
@@ -19,6 +16,9 @@ dependencies:
     version: 7.6.0
 
 devDependencies:
+  '@antfu/eslint-define-config':
+    specifier: 1.23.0-2
+    version: 1.23.0-2
   '@types/node':
     specifier: ^20.11.19
     version: 20.11.19
@@ -60,7 +60,7 @@ packages:
   /@antfu/eslint-define-config@1.23.0-2:
     resolution: {integrity: sha512-LvxY21+ZhpuBf/aHeBUtGQhSEfad4PkNKXKvDOSvukaM3XVTfBhwmHX2EKwAsdq5DlfjbT3qqYyMiueBIO5iDQ==}
     engines: {node: '>=18.0.0', npm: '>=9.0.0', pnpm: '>= 8.6.0'}
-    dev: false
+    dev: true
 
   /@esbuild/aix-ppc64@0.19.12:
     resolution: {integrity: sha512-bmoCYyWdEL3wDQIVbcyzRyeKLgk2WtWLTWz1ZIAZF/EGbNOwSA6ew3PftJ1PqMiOOGu0OyFMzG53L0zqIpPeNA==}
