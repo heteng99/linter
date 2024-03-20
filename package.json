@@ -1,6 +1,6 @@
 {
   "name": "@heteng99/linter",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "my linter",
   "main": "eslint.config.js",
   "author": "heteng99",
@@ -23,6 +23,7 @@
     "tsconfig.json"
   ],
   "peerDependencies": {
+    "@antfu/eslint-define-config": "1.23.0-2",
     "eslint": ">=8.40.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
