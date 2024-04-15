@@ -11,15 +11,13 @@
 - [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)（用来禁用 ESLint 和 Prettier 的冲突规则的）
 
 
-## 📦Install
+## 📦安装
 
-> ⚠ 使用时**需要**安装 ESLint@8.0.0+ 和 Prettier
-
-```
-npm install @heteng99/linter eslint prettier -D
+```bash
+npm install -D @heteng99/linter
 ```
 
-## ☕How to use it
+## ☕使用
 
 ### 生成配置文件
 
@@ -35,16 +33,16 @@ npm run lint-cli
 
 如果你使用的是 VSCode 并且 ESLint 看起来没有起作用，可能还需要做以下工作：
 
-#### Ⅰ. 安装插件
+#### 1. 安装插件
 
 - 插件：ESLint，作者：Microsoft
 - 插件：Prettier，作者：Prettier
 
-#### Ⅱ. 修改配置
+#### 2. 修改配置
 
 在 settings.json 中添加[这些配置](./readme_resources/settings.json)
 
-#### Ⅲ. 查看 OUTPUT
+#### 3. 查看 OUTPUT
 
 查看控制台的输出，如图表示 ESLint 正常运作，可以做其他事情啦~
 ![img](./readme_resources/20240220221337.png)
@@ -90,14 +88,7 @@ export default defineFlatConfig([
 - [ESLint Flat 配置](https://eslint.org/docs/latest/use/configure/configuration-files-new)
 - [ESLint Rules](https://eslint.org/docs/latest/rules/)
 
-## ☑️TODO
-
-- 添加规则 [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue)
-- 添加规则 [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) 
-- 支持内置 StyleLint
-- ✔️ 改造成 lint-cli，运行命令完成所有配置
-
-## 📖推荐阅读
+## 📖参考
 
 - [eslint为什么没有实现max-len的autofix？](https://juejin.cn/post/7108201700925636644)
 - [ESLint 之与 Prettier 配合使用](https://juejin.cn/post/6924568874700505102)

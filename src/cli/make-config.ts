@@ -6,7 +6,8 @@ import fsp from 'node:fs/promises';
 import fs from 'node:fs';
 import path from 'node:path';
 import prompts from 'prompts';
-import { RECOMMENDED_CONFIG_STATEMENT, RECOMMENDED_IMPORT_STATEMENT, SelectedKey } from './select-recommended';
+import ora from 'ora';
+import { CONFIG_FILENAME_MAP, CONFIG_MAP, Env, ExtendPlugin, IMPORT_MAP, ModuleType } from './constants';
 
 const eslintConfigTemplate = `import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import { defineFlatConfig } from '@antfu/eslint-define-config';
@@ -26,22 +27,26 @@ const prettierConfigTemplate = `/** @type {import("prettier").Config} */
 export default {
   // add your prettier rules here
   // @see https://prettier.io/docs/en/options.html
-  // singleQuote: true,
+  singleQuote: true,
+  printWidth: 100,
 };
 `;
 
-const makeESLintConfigFile = (selectedKeys: SelectedKey[]) => {
+const makeESLintConfigFile = (selectedKeys: ExtendPlugin[], env: Env) => {
   const importStatements: string[] = [];
   const configStatements: string[] = [];
   for (const key of selectedKeys) {
-    importStatements.push(RECOMMENDED_IMPORT_STATEMENT[key]);
-    configStatements.push(RECOMMENDED_CONFIG_STATEMENT[key]);
+    IMPORT_MAP[key] && importStatements.push(IMPORT_MAP[key] as string);
+    CONFIG_MAP[key] && configStatements.push(CONFIG_MAP[key] as string);
   }
   const templateArr = eslintConfigTemplate.split('\n');
   const importPosition = 0;
   const configPosition = templateArr.indexOf(`export default [`) + importStatements.length + 1;
   templateArr.splice(importPosition, 0, ...importStatements);
   templateArr.splice(configPosition, 0, ...configStatements);
+  if (env !== Env.NODE) {
+    templateArr[templateArr.indexOf('      globals: globals.node,')] = '      globals: globals.browser,';
+  }
   return templateArr.join('\n');
 };
 
@@ -57,7 +62,7 @@ const askIfOverwriteConfigFile = async (fileName = 'the config file') => {
 };
 
 const writeConfigFile = async (fileContent: string, fileName: string) => {
-  const spinner = (await import('ora')).default();
+  const spinner = ora();
   spinner.start(`Generating ${fileName}`);
   try {
     if (fs.existsSync(path.resolve(process.cwd(), fileName))) {
@@ -75,10 +80,10 @@ const writeConfigFile = async (fileContent: string, fileName: string) => {
   }
 };
 
-export const writeESLintConfigFile = async (selectedKeys: SelectedKey[]) => {
-  await writeConfigFile(makeESLintConfigFile(selectedKeys), 'eslint.config.js');
+export const writeESLintConfigFile = async (selectedKeys: ExtendPlugin[], env: Env, moduleType: ModuleType) => {
+  await writeConfigFile(makeESLintConfigFile(selectedKeys, env), CONFIG_FILENAME_MAP[moduleType][0]);
 };
 
-export const writePrettierConfigFile = async () => {
-  await writeConfigFile(prettierConfigTemplate, 'prettier.config.js');
+export const writePrettierConfigFile = async (moduleType: ModuleType) => {
+  await writeConfigFile(prettierConfigTemplate, CONFIG_FILENAME_MAP[moduleType][1]);
 };
