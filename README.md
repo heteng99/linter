@@ -49,7 +49,7 @@ npm run lint-cli
 
 ### 修改规则、配置
 
-#### Ⅰ. 覆盖 Prettier 规则
+#### 覆盖 Prettier 规则
 
 修改 `prettier.config.js` 文件，详情见 [Prettier 配置参考](https://prettier.io/docs/en/options.html)
 
@@ -60,11 +60,11 @@ export default {
 };
 ```
 
-#### Ⅱ. 覆盖 ESLint 规则
+#### 覆盖 ESLint 规则
 
 修改 `eslint.config.js` 了，例如我想要：
 
-- 添加一条规则
+- 添加一条 ESLint 规则
 - 添加 ignore 规则
 
 ```js
@@ -83,13 +83,13 @@ export default defineFlatConfig([
 ]);
 ```
 
-可参考：
+更多规则配置可参考：
 
-- [ESLint Flat 配置](https://eslint.org/docs/latest/use/configure/configuration-files-new)
+- [ESLint Flat Config](https://eslint.org/docs/latest/use/configure/configuration-files-new)
 - [ESLint Rules](https://eslint.org/docs/latest/rules/)
 
 ## 📖参考
 
-- [eslint为什么没有实现max-len的autofix？](https://juejin.cn/post/7108201700925636644)
+- [ESLint 为什么没有实现 max-len 的 autofix？](https://juejin.cn/post/7108201700925636644)
 - [ESLint 之与 Prettier 配合使用](https://juejin.cn/post/6924568874700505102)
 - [prefer-arrow-callback fix conflicting with prettier fix #65](https://github.com/prettier/eslint-plugin-prettier/issues/65)
