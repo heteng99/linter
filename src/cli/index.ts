@@ -1,7 +1,7 @@
 import * as prompts from './prompts';
 import { writeESLintConfigFile, writePrettierConfigFile } from './make-config';
 import { EXTEND_PKG_MAP, ExtendPlugin, INSTALL_CMD_MAP, PKG_LIST } from './constants';
-import { execSync } from 'child_process';
+import { exec } from 'child_process';
 import ora from 'ora';
 
 const getPkgList = (extendPlugins: ExtendPlugin[]) => {
@@ -25,8 +25,17 @@ const getPkgList = (extendPlugins: ExtendPlugin[]) => {
     const pkgManager = await prompts.selectPkgManager();
     const spinner = ora();
     spinner.start('Installing dependencies, please wait.');
-    execSync(INSTALL_CMD_MAP[pkgManager] + pkgList.join(' '));
-    spinner.succeed('Done.');
+    await new Promise((resolve, reject) => {
+      exec(INSTALL_CMD_MAP[pkgManager] + pkgList.join(' '), (err) => {
+        if (err) {
+          reject(err);
+          spinner.fail('Failed.');
+          return;
+        }
+        resolve(null);
+        spinner.succeed('Done.');
+      });
+    });
   }
 
   await writeESLintConfigFile(extendPlugins, env, moduleType);
