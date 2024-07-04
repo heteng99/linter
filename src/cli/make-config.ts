@@ -7,48 +7,20 @@ import fs from 'node:fs';
 import path from 'node:path';
 import prompts from 'prompts';
 import ora from 'ora';
-import { CONFIG_FILENAME_MAP, CONFIG_MAP, Env, ExtendPlugin, IMPORT_MAP, ModuleType } from './constants';
-
-const eslintConfigTemplate = `import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import { defineFlatConfig } from '@antfu/eslint-define-config';
-import globals from 'globals';
-
-export default [
-  eslintPluginPrettierRecommended,
-  defineFlatConfig({
-    languageOptions: {
-      globals: globals.node,
-    },
-  }),
-];
-`;
-
-const prettierConfigTemplate = `/** @type {import("prettier").Config} */
-export default {
-  // add your prettier rules here
-  // @see https://prettier.io/docs/en/options.html
-  singleQuote: true,
-  printWidth: 100,
-};
-`;
-
-const makeESLintConfigFile = (selectedKeys: ExtendPlugin[], env: Env) => {
-  const importStatements: string[] = [];
-  const configStatements: string[] = [];
-  for (const key of selectedKeys) {
-    IMPORT_MAP[key] && importStatements.push(IMPORT_MAP[key] as string);
-    CONFIG_MAP[key] && configStatements.push(CONFIG_MAP[key] as string);
-  }
-  const templateArr = eslintConfigTemplate.split('\n');
-  const importPosition = 0;
-  const configPosition = templateArr.indexOf(`export default [`) + importStatements.length + 1;
-  templateArr.splice(importPosition, 0, ...importStatements);
-  templateArr.splice(configPosition, 0, ...configStatements);
-  if (env !== Env.NODE) {
-    templateArr[templateArr.indexOf('      globals: globals.node,')] = '      globals: globals.browser,';
-  }
-  return templateArr.join('\n');
-};
+import {
+  generateEslintConfigFile,
+  generatePrettierConfigFile,
+} from './templates/generate-config-file';
+import {
+  basePackages,
+  baseStatement,
+  extendExports,
+  extendPackages,
+  extendStatement,
+  getBaseExports,
+} from './templates/eslint-config-constants';
+import { exportLines } from './templates/prettier-config-constants';
+import { ExtendPlugin, Env } from './constants';
 
 const askIfOverwriteConfigFile = async (fileName = 'the config file') => {
   const { doOverwrite } = await prompts([
@@ -56,6 +28,7 @@ const askIfOverwriteConfigFile = async (fileName = 'the config file') => {
       type: 'confirm',
       name: 'doOverwrite',
       message: `Detected ${fileName} exists, do you wanna overwrite it?`,
+      initial: true,
     },
   ]);
   return Boolean(doOverwrite);
@@ -80,10 +53,24 @@ const writeConfigFile = async (fileContent: string, fileName: string) => {
   }
 };
 
-export const writeESLintConfigFile = async (selectedKeys: ExtendPlugin[], env: Env, moduleType: ModuleType) => {
-  await writeConfigFile(makeESLintConfigFile(selectedKeys, env), CONFIG_FILENAME_MAP[moduleType][0]);
+export const writeESLintConfigFile = async (
+  extendPlugins: ExtendPlugin[],
+  env: Env,
+  moduleType: 'esm' | 'cjs',
+) => {
+  const packages = basePackages;
+  const statements = baseStatement;
+  const exports = getBaseExports(env);
+  for (const extendPlugin of extendPlugins) {
+    packages.push(...extendPackages[extendPlugin]);
+    statements.push(...extendStatement[extendPlugin]);
+    exports.push(...extendExports[extendPlugin]);
+  }
+  const fileContent = generateEslintConfigFile(packages, exports, statements, moduleType);
+  await writeConfigFile(fileContent, 'eslint.config.js');
 };
 
-export const writePrettierConfigFile = async (moduleType: ModuleType) => {
-  await writeConfigFile(prettierConfigTemplate, CONFIG_FILENAME_MAP[moduleType][1]);
+export const writePrettierConfigFile = async (moduleType: 'esm' | 'cjs') => {
+  const fileContent = generatePrettierConfigFile(exportLines, moduleType);
+  await writeConfigFile(fileContent, 'prettier.config.js');
 };

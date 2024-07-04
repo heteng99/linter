@@ -1,5 +1,5 @@
 import prompts from 'prompts';
-import { Env, ExtendPlugin, ModuleType, PkgManager } from './constants';
+import { Env, ExtendPlugin, PkgManager } from './constants';
 
 export const selectPkgManager = async () => {
   const { pkgManager } = await prompts([
@@ -22,15 +22,14 @@ export const selectModuleType = async () => {
     {
       type: 'select',
       name: 'moduleType',
-      message: 'Which file suffix do you want to use?',
+      message: 'Choose module type of the config files.',
       choices: [
-        { title: '.esm', value: ModuleType.ESM },
-        { title: '.cjs', value: ModuleType.CJS },
-        { title: '.js', value: ModuleType.NONE },
+        { title: 'esm', value: 'esm' },
+        { title: 'cjs', value: 'cjs' },
       ],
     },
   ]);
-  return moduleType as ModuleType;
+  return moduleType as 'esm' | 'cjs';
 };
 
 export const selectEnv = async () => {
@@ -50,39 +49,29 @@ export const selectEnv = async () => {
 
 export const selectExtends = async () => {
   const result = [];
-  const { useESLintRecommended, framework, useTypescript } = await prompts([
-    {
-      type: 'confirm',
-      name: 'useESLintRecommended',
-      message: 'Do you want to use eslint recommended?',
-      initial: true,
-    },
-    {
-      type: 'select',
-      name: 'framework',
-      message: 'Which framework does your project use?',
-      choices: [
-        { title: 'Vue2', value: ExtendPlugin.VUE2 },
-        { title: 'Vue3', value: ExtendPlugin.VUE3 },
-        { title: 'React', value: ExtendPlugin.REACT },
-        { title: 'none', value: null },
-      ],
-    },
+  const { useTypescript } = await prompts([
+    // TODO: make framework selectable
+    // {
+    //   type: 'select',
+    //   name: 'framework',
+    //   message: 'Which framework does your project use?',
+    //   choices: [
+    //     { title: 'Vue2', value: ExtendPlugin.VUE2 },
+    //     { title: 'Vue3', value: ExtendPlugin.VUE3 },
+    //     { title: 'React', value: ExtendPlugin.REACT },
+    //     { title: 'none', value: null },
+    //   ],
+    // },
     {
       type: 'confirm',
       name: 'useTypescript',
-      message: 'Does your project use typescript?',
+      message: 'Use typescript in your project?',
       initial: true,
     },
   ]);
-  if (useESLintRecommended) {
-    result.push(ExtendPlugin.ESLINT);
-  }
+
   if (useTypescript) {
     result.push(ExtendPlugin.TYPESCRIPT);
-  }
-  if (framework) {
-    result.push(framework);
   }
   return result as ExtendPlugin[];
 };

@@ -1,12 +1,14 @@
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import { defineFlatConfig } from '@antfu/eslint-define-config';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+const [tsLangOptions, tsCommonConfigs, tsConfigs] = [...tseslint.configs.recommended];
+tsConfigs.files = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'];
 
 export default [
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
   eslintPluginPrettierRecommended,
   defineFlatConfig({
     rules: {
@@ -16,4 +18,7 @@ export default [
       globals: globals.node,
     },
   }),
+  tsLangOptions,
+  tsCommonConfigs,
+  tsConfigs,
 ];

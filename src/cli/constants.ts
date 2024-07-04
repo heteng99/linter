@@ -1,15 +1,8 @@
-export enum ModuleType {
-  ESM,
-  CJS,
-  NONE,
-}
-
 export enum ExtendPlugin {
-  ESLINT,
   TYPESCRIPT,
-  VUE2,
-  VUE3,
-  REACT,
+  // VUE2,
+  // VUE3,
+  // REACT,
 }
 
 export enum Env {
@@ -23,35 +16,12 @@ export enum PkgManager {
   YARN = 'yarn',
 }
 
-export const CONFIG_FILENAME_MAP = {
-  [ModuleType.ESM]: ['eslint.config.mjs', 'prettier.config.mjs'],
-  [ModuleType.CJS]: ['eslint.config.cjs', 'prettier.config.cjs'],
-  [ModuleType.NONE]: ['eslint.config.js', 'prettier.config.js'],
-};
-
-// TODO: support frameworks such as vue, react etc.
-export const IMPORT_MAP = {
-  [ExtendPlugin.ESLINT]: `import eslint from '@eslint/js';`,
-  [ExtendPlugin.TYPESCRIPT]: `import tseslint from 'typescript-eslint';`,
-  [ExtendPlugin.VUE2]: null,
-  [ExtendPlugin.VUE3]: null,
-  [ExtendPlugin.REACT]: null,
-};
-
-export const CONFIG_MAP = {
-  [ExtendPlugin.ESLINT]: '  eslint.configs.recommended,',
-  [ExtendPlugin.TYPESCRIPT]: '  ...tseslint.configs.recommended,',
-  [ExtendPlugin.VUE2]: null,
-  [ExtendPlugin.VUE3]: null,
-  [ExtendPlugin.REACT]: null,
-};
-
+// TODO: support vue2/vue3/react
 export const EXTEND_PKG_MAP = {
-  [ExtendPlugin.ESLINT]: null,
   [ExtendPlugin.TYPESCRIPT]: 'typescript-eslint@^7.0.0',
-  [ExtendPlugin.VUE2]: null,
-  [ExtendPlugin.VUE3]: null,
-  [ExtendPlugin.REACT]: null,
+  // [ExtendPlugin.VUE2]: null,
+  // [ExtendPlugin.VUE3]: null,
+  // [ExtendPlugin.REACT]: null,
 };
 
 export const PKG_LIST = [
