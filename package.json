@@ -1,6 +1,6 @@
 {
   "name": "@heteng99/linter",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "my linter",
   "main": "eslint.config.js",
   "author": "heteng99",
