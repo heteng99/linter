@@ -57,7 +57,7 @@ export const EXTEND_PKG_MAP = {
 export const PKG_LIST = [
   '@antfu/eslint-define-config@1.23.0-2',
   'globals@^14.0.0',
-  'eslint@^8.40.0',
+  'eslint@^8.56.0',
   'eslint-config-prettier@^9.1.0',
   'eslint-plugin-prettier@^5.1.3',
   'prettier@^3.0.0',
